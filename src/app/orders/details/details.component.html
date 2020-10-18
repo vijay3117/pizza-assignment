@@ -1,0 +1,80 @@
+<div>
+
+    <div class="container">
+        <h2 class="text-center mb-4"> Order Details </h2>
+        <div class="row">
+            <div class="col-25">
+                <label for="cName">Customer Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" [(ngModel)]="orderDetails.customerName" [ngModelOptions]="{standalone: true}"
+                    name="customerName" placeholder="Customer Name">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="oName">Order Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" [(ngModel)]="orderDetails.orderName" [ngModelOptions]="{standalone: true}"
+                    name="orderName" placeholder="Order Name">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="items">No.of Items</label>
+            </div>
+            <div class="col-75">
+                <input type="text" [(ngModel)]="orderDetails.noOfItems" [ngModelOptions]="{standalone: true}"
+                    name="noOfItems" placeholder="No.Of Items">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="status">Status</label>
+            </div>
+            <div class="col-75">
+                <input type="text" [(ngModel)]="orderDetails.status" [ngModelOptions]="{standalone: true}"
+                    name="status" placeholder="Status">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="price">Price</label>
+            </div>
+            <div class="col-75">
+                <input type="number" min="0" class="form-control" [(ngModel)]="orderDetails.price"
+                    [ngModelOptions]="{standalone: true}" name="price" placeholder="Price">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="total">Total</label>
+            </div>
+            <div class="col-75">
+                <input type="number" disabled class="form-control" [(ngModel)]="orderDetails.total"
+                    [ngModelOptions]="{standalone: true}" name="total" placeholder="Total">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="address">Address</label>
+            </div>
+            <div class="col-75">
+                <textarea [(ngModel)]="orderDetails.address" [ngModelOptions]="{standalone: true}" name="address"
+                    placeholder="Address"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-75"></div>
+            <div class="col-25">
+                <button class="btn btn-primary float-right" [routerLink]="['/orders']">Back</button>
+            </div>
+        </div>
+    </div>
+</div>

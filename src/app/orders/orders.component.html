@@ -1,0 +1,141 @@
+<div class="p-4">
+
+    <div class="mb-4 pb-4">
+        <span class="f-25">Order Details</span>
+        <button class="btn btn-primary float-right" (click)="createOrder(orderModal)">Create order</button>
+
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+        <!-- customerName Column -->
+        <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+            <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['details', element?.id]">{{element.customerName}}</a>
+            </td>
+        </ng-container>
+
+        <!-- noOfItems Column -->
+        <ng-container matColumnDef="noOfItems">
+            <th mat-header-cell *matHeaderCellDef> No Of Items </th>
+            <td mat-cell *matCellDef="let element"> {{element.noOfItems}} </td>
+        </ng-container>
+
+        <!-- price Column -->
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element">
+                <select [(ngModel)]="element.status" (change)="getStatus();">
+                    <option value="received">Received</option>
+                    <option value="preparing">Preparing</option>
+                    <option value="ready-to-serve">Ready to serve</option>
+                </select>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="!dataSource?.length" class="mt-4 text-center">
+        No Records Found!
+    </div>
+
+
+    <!-- Order Create Modal -->
+    <div>
+        <ng-template #orderModal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Create Order</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click');onReset()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Order Name</label>
+                            <input type="text" formControlName="orderName" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.orderName.errors }" />
+                            <div *ngIf="submitted && f.orderName.errors" class="invalid-feedback">
+                                <div *ngIf="f.orderName.errors.required">Order name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Customer Name</label>
+                            <input type="text" formControlName="customerName" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.customerName.errors }" />
+                            <div *ngIf="submitted && f.customerName.errors" class="invalid-feedback">
+                                <div *ngIf="f.customerName.errors.required">Customer Name is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>No.of items</label>
+                            <input type="text" formControlName="noOfItems" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.noOfItems.errors }" />
+                            <div *ngIf="submitted && f.noOfItems.errors" class="invalid-feedback">
+                                <div *ngIf="f.noOfItems.errors.required">Item is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Price</label>
+                            <input type="text" formControlName="price" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                            <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                                <div *ngIf="f.price.errors.required">Price is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <label>Total Amount of the Order</label>
+                            <input type="text" disabled formControlName="total" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.total.errors }" />
+                            <div *ngIf="submitted && f.total.errors" class="invalid-feedback">
+                                <!-- <div *ngIf="f.total.errors.required">Confirm Password is required</div> -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Status</label>
+                            <select formControlName="status" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                                <option value="">--Choose--</option>
+                                <option value="received">Received</option>
+                                <option value="preparing">Preparing</option>
+                                <option value="ready-to-serve">Ready to serve</option>
+                            </select>
+                            <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                                <div *ngIf="f.status.errors.required">Status is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <label>Delivery Address</label>
+                            <textarea formControlName="address" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address.errors }"></textarea>
+                            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                <div *ngIf="f.address.errors.required">Address is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center modal-footer">
+                        <button class="btn btn-secondary" type="reset" (click)="modal.close('Save click')"
+                            ngbAutofocus>Cancel</button>
+                        <button class="btn btn-primary mr-1">Register</button>
+                    </div>
+                </form>
+            </div>
+        </ng-template>
