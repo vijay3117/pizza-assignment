@@ -1,5 +1,7 @@
 # PizzaTask
 
+This project is create and update the status of orders
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
 ## Development server
